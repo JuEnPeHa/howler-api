@@ -4,6 +4,7 @@ import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 import helmet from 'helmet';
 import compression from 'compression';
+import howlerRoutes from './routes/howlerRoutes';
 
 class Server {
     app: express.Application;
@@ -26,6 +27,7 @@ class Server {
 
     routes(): void {
         this.app.use(indexRoutes);
+        this.app.use('/api/ids', howlerRoutes);
     }
 
     start(): void {

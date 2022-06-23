@@ -10,8 +10,8 @@ class HowlerRoutes {
     }
 
     async getId(req: Request, res: Response) {
-        const id: Map<number, number> = await Functions.getNFTId();
-        res.json( /*id: id*/ id.keys );
+        const id/*: number*/ = await Functions.getNFTId();
+        res.send( /*id: id*/ {id} );
     }
 
     routes() {

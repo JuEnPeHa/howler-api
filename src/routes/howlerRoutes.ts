@@ -12,7 +12,7 @@ class HowlerRoutes {
     }
 
     async getId(req: Request, res: Response) {
-        const id/*: number*/ = await Functions.getNFTId();
+        const id/*: number*/ = await Functions.getNFTId("JOHN", 0);
         res.send( /*id: id*/ {id} );
     }
 

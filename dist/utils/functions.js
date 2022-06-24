@@ -7,19 +7,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getConfig } from "../config.js";
-import { makeBuy, OG_TOTAL_AMOUNT, OG_PRICE } from "../consts.js";
+import { getRandomKey } from "../consts.js";
+import { Database } from "../database.js";
+const db = Database.getConnection();
 //const keyStore: keyStores.BrowserLocalStorageKeyStore = new keyStores.BrowserLocalStorageKeyStore();
-const { networkId, nodeUrl, walletUrl, helperUrl, contractName } = getConfig(process.env.NODE_ENV || 'testnet');
-let nearConfig = getConfig('mainnet');
+// const { networkId, nodeUrl, walletUrl, helperUrl, contractName } = getConfig(process.env.NODE_ENV || 'testnet');
+// let nearConfig = getConfig('mainnet');
 export var Functions;
 (function (Functions) {
-    Functions.getNFTId = () => /*: Promise<number>*/ __awaiter(this, void 0, void 0, function* () {
+    Functions.getNFTId = (account, currentBlock) => /*: Promise<number>*/ __awaiter(this, void 0, void 0, function* () {
+        const id = yield getRandomKey(db);
+        console.log(`getNFTId: id: ${id}`);
+        tryToSeparate(id, account, currentBlock);
         /*const near = await connect({ keyStore, headers: {}, ...nearConfig});
         const wallet = new WalletConnection(near, nearConfig.contractName);*/
-        return yield makeBuy(OG_TOTAL_AMOUNT, OG_PRICE /*, near*/);
+        //return await makeBuy(OG_TOTAL_AMOUNT, OG_PRICE/*, near*/);
         //const response = await fetch(`${nodeUrl}/api/nft/${contractName}/ids`);
         //const data = await response.json();
         //return data.id;
+    });
+    const tryToSeparate = (id, account, currentBlock) => __awaiter(this, void 0, void 0, function* () {
+        yield db.read();
+        const temporal_nft = db.data.find(nft => nft.id === id);
+        if (temporal_nft.sold === true) {
+            return false;
+        }
+        else if (temporal_nft.sold === false && temporal_nft.separatedBy === "") {
+            temporal_nft.separatedBy = account;
+            temporal_nft.separatedAt = currentBlock;
+            //temporal_nft.sold = false;
+            db.write();
+            return true;
+        }
+        else if (temporal_nft.sold === false && temporal_nft.separatedBy !== "") {
+            //Función para revisar si el block es mayor a los separadosAt + 450
+            if (currentBlock > temporal_nft.separatedAt + 450) {
+                temporal_nft.separatedBy = account;
+                temporal_nft.separatedAt = currentBlock;
+                //temporal_nft.sold = false;
+                db.write();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     });
 })(Functions = Functions || (Functions = {}));

@@ -20,14 +20,14 @@ export var Database;
             const adapter = new JSONFile(file);
             db = new Low(adapter);
             yield db.read();
-            db.data || (db.data = { HowlerNfts: [] });
+            db.data || (db.data = []);
             db.write();
             console.log(db);
         });
     }
     Database.createConnection = createConnection;
     function getConnection() {
-        db;
+        return db;
     }
     Database.getConnection = getConnection;
     function getNFTId() {

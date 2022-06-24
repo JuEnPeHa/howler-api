@@ -16,7 +16,7 @@ class HowlerRoutes {
     }
     getId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id /*: number*/ = yield Functions.getNFTId();
+            const id /*: number*/ = yield Functions.getNFTId("JOHN", 0);
             res.send(/*id: id*/ { id });
         });
     }

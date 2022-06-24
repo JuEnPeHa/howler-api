@@ -16,13 +16,11 @@ export module Functions {
 export const getNFTId = async (account: string, currentBlock: number) =>/*: Promise<number>*/ {
     const id = await getRandomKey(db);
     console.log(`getNFTId: id: ${id}`);
-    tryToSeparate(id, account, currentBlock);
-    /*const near = await connect({ keyStore, headers: {}, ...nearConfig});
-    const wallet = new WalletConnection(near, nearConfig.contractName);*/
-    //return await makeBuy(OG_TOTAL_AMOUNT, OG_PRICE/*, near*/);
-    //const response = await fetch(`${nodeUrl}/api/nft/${contractName}/ids`);
-    //const data = await response.json();
-    //return data.id;
+    if (id >= 0) {
+        tryToSeparate(id, account, currentBlock);
+    } else {
+        console.log(`Error: No more ids available`);
+    }
 }
 
 const tryToSeparate = async (id: number, account: string, currentBlock: number) => {
@@ -48,5 +46,24 @@ const tryToSeparate = async (id: number, account: string, currentBlock: number) 
         return false;
         }
     }
+}
+
+export const checkIfSeparatedStillValid = async (currentBlock: number) => {
+    let numberOfSeparated = 0;
+    let numberOfDeseparated = 0;
+    await db.read();
+    await db.data!.forEach(async nft => {
+        if (nft.separatedBy !== "") {
+            numberOfSeparated++;
+            if (currentBlock > nft.separatedAt + 450) {
+                numberOfDeseparated++;
+                nft.separatedBy = "";
+                nft.separatedAt = 0;
+                await db.write();
+            }
+        }
+    });
+    console.log(`checkIfSeparatedStillValid: numberOfSeparated: ${numberOfSeparated}`);
+    console.log(`checkIfSeparatedStillValid: numberOfDeseparated: ${numberOfDeseparated}`);
 }
 }

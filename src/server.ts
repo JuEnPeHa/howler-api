@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import howlerRoutes from './routes/howlerRoutes';
 
+//import './database';
+
 class Server {
     app: express.Application;
 

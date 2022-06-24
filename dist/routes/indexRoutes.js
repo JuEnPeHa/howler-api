@@ -1,18 +1,15 @@
-import { Request, Response, Router } from 'express';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
 class IndexRoutes {
-    router: Router;
     constructor() {
-        this.router = Router();
+        this.router = (0, express_1.Router)();
         this.routes();
     }
-
     routes() {
         this.router.get('/', (req, res) => res.send('Api: /api/ids'));
     }
 }
-
 const indexRoutes = new IndexRoutes();
 indexRoutes.routes();
-
-export default indexRoutes.router;
+exports.default = indexRoutes.router;

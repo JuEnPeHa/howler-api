@@ -1,36 +1,32 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const morgan_1 = __importDefault(require("morgan"));
-const cors_1 = __importDefault(require("cors"));
-const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const helmet_1 = __importDefault(require("helmet"));
-const compression_1 = __importDefault(require("compression"));
-const howlerRoutes_1 = __importDefault(require("./routes/howlerRoutes"));
-//import './database';
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import indexRoutes from './routes/indexRoutes.js';
+import helmet from 'helmet';
+import compression from 'compression';
+import howlerRoutes from './routes/howlerRoutes.js';
+import { Database } from './database.js';
 class Server {
     constructor() {
-        this.app = (0, express_1.default)();
+        this.app = express();
         this.config();
         this.routes();
     }
     config() {
         this.app.set('port', process.env.PORT || 3000);
-        this.app.use((0, morgan_1.default)('dev'));
-        this.app.use((0, cors_1.default)());
-        this.app.use(express_1.default.json());
-        this.app.use(express_1.default.urlencoded({ extended: false }));
-        this.app.use((0, helmet_1.default)());
-        this.app.use((0, compression_1.default)());
+        this.app.use(morgan('dev'));
+        this.app.use(cors());
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(helmet());
+        this.app.use(compression());
     }
     routes() {
-        this.app.use(indexRoutes_1.default);
-        this.app.use('/api/ids', howlerRoutes_1.default);
+        this.app.use(indexRoutes);
+        this.app.use('/api/ids', howlerRoutes);
     }
     start() {
+        Database.createConnection();
         this.app.listen(this.app.get('port'), () => {
             console.log('Server on port', this.app.get('port'));
         });
@@ -38,4 +34,4 @@ class Server {
 }
 const server = new Server();
 server.start();
-exports.default = server.app;
+export default server.app;

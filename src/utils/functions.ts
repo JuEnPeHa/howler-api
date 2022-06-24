@@ -1,6 +1,6 @@
 import { connect, keyStores, WalletConnection } from "near-api-js";
-import { getConfig } from "../config";
-import { makeBuy, OG_TOTAL_AMOUNT, OG_PRICE } from "../consts";
+import { getConfig } from "../config.js";
+import { makeBuy, OG_TOTAL_AMOUNT, OG_PRICE } from "../consts.js";
 
 //const keyStore: keyStores.BrowserLocalStorageKeyStore = new keyStores.BrowserLocalStorageKeyStore();
 
@@ -9,7 +9,7 @@ const { networkId, nodeUrl, walletUrl, helperUrl, contractName } = getConfig(pro
 let nearConfig = getConfig('mainnet');
 
 export module Functions {
-export async function getNFTId()/*: Promise<number>*/ {
+export const getNFTId = async () =>/*: Promise<number>*/ {
     /*const near = await connect({ keyStore, headers: {}, ...nearConfig});
     const wallet = new WalletConnection(near, nearConfig.contractName);*/
     return await makeBuy(OG_TOTAL_AMOUNT, OG_PRICE/*, near*/);

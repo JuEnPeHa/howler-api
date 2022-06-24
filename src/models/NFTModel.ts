@@ -10,7 +10,7 @@ export class NFTModel {
         public updatedAt: Date,
         public sold: boolean,
         public separated: boolean,
-        public separatedAt: Date,
+        public separatedAt: number,
         public separatedBy: string,
     ) {}
 
@@ -26,7 +26,7 @@ export class NFTModel {
             new Date(json.updatedAt),
             json.sold,
             json.separated,
-            new Date(json.separatedAt),
+            json.separatedAt,
             json.separatedBy,
         );
     }
@@ -43,7 +43,7 @@ export class NFTModel {
             updatedAt: this.updatedAt.toISOString(),
             sold: this.sold,
             separated: this.separated,
-            separatedAt: this.separatedAt.toISOString(),
+            separatedAt: this.separatedAt,
             separatedBy: this.separatedBy,
         };
     }

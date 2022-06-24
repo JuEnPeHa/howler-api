@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
+import { Router } from 'express';
 class IndexRoutes {
     constructor() {
-        this.router = (0, express_1.Router)();
+        this.router = Router();
         this.routes();
     }
     routes() {
@@ -12,4 +10,4 @@ class IndexRoutes {
 }
 const indexRoutes = new IndexRoutes();
 indexRoutes.routes();
-exports.default = indexRoutes.router;
+export default indexRoutes.router;

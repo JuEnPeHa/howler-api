@@ -1,12 +1,13 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import indexRoutes from './routes/indexRoutes';
+import indexRoutes from './routes/indexRoutes.js';
 import helmet from 'helmet';
 import compression from 'compression';
-import howlerRoutes from './routes/howlerRoutes';
+import howlerRoutes from './routes/howlerRoutes.js';
 
-//import './database';
+import {Database} from './database.js';
+
 
 class Server {
     app: express.Application;
@@ -33,6 +34,7 @@ class Server {
     }
 
     start(): void {
+        Database.createConnection();
         this.app.listen(this.app.get('port'), () => {
             console.log('Server on port', this.app.get('port'));
         });

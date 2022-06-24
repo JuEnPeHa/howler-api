@@ -1,6 +1,8 @@
 import { Request, Response, Router } from 'express';
-import { Functions } from '../utils/functions';
-import * as defaults from '../consts';
+import { Functions } from '../utils/functions.js';
+import * as defaults from '../consts.js';
+import { Low } from 'lowdb';
+import { nanoid } from 'nanoid';
 
 class HowlerRoutes {
     router: Router;
@@ -17,6 +19,7 @@ class HowlerRoutes {
     routes() {
         this.router.get('/', (req, res) => res.send('Api: /api/ids'));
         this.router.get('/id', this.getId);
+        this.router.get('/id/:id', this.getId);
     }
 }
 

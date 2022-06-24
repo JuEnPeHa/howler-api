@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getConfig = void 0;
 let mainnet = false;
 let CONTRACT_NAME = mainnet ? "" : "";
-function getConfig(env) {
+export function getConfig(env) {
     if (env === 'mainnet') {
         mainnet = true;
     }
@@ -64,5 +61,4 @@ function getConfig(env) {
             throw Error(`Unconfigured environment '${env}'. Can be configured in src/config.ts.`);
     }
 }
-exports.getConfig = getConfig;
 //export default getConfig(process.env.NODE_ENV || 'testnet');

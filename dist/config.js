@@ -8,7 +8,7 @@ export function getConfig(env) {
             return {
                 networkId: 'mainnet',
                 nodeUrl: 'https://rpc.mainnet.near.org',
-                contractName: "",
+                contractName: CONTRACT_NAME_MAINNET,
                 walletUrl: 'https://wallet.near.org',
                 helperUrl: 'https://helper.mainnet.near.org'
             };
@@ -17,7 +17,7 @@ export function getConfig(env) {
             return {
                 networkId: 'default',
                 nodeUrl: 'https://rpc.testnet.near.org',
-                contractName: "",
+                contractName: CONTRACT_NAME_TESTNET,
                 walletUrl: 'https://wallet.testnet.near.org',
                 helperUrl: 'https://helper.testnet.near.org'
             };

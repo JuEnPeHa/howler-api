@@ -11,6 +11,7 @@
     "start": "tsc && node ./dist/server.js",
     "dev": "ts-node-dev --respawn ./src/server.ts",
     "dev-js": "nodemon --watch 'src/**/*' -e ts,tsx --ignore db.json --exec 'tsc && node ./dist/server.js'",
+    "run": "node ./dist/server.js",
     "build": "tsc"
   },
   "author": "",

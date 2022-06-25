@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { Low, JSONFile } from "lowdb";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { STARTER_DB } from './lowdb.js';
 let db;
 export var Database;
 (function (Database) {
@@ -20,9 +21,9 @@ export var Database;
             const adapter = new JSONFile(file);
             db = new Low(adapter);
             yield db.read();
-            db.data || (db.data = []);
+            db.data || (db.data = STARTER_DB);
             db.write();
-            console.log(db);
+            //console.log(db);
         });
     }
     Database.createConnection = createConnection;

@@ -1,7 +1,9 @@
  import { Low, JSONFile } from "lowdb";
  import {join, dirname} from "path";
  import { fileURLToPath } from "url";
+import { OG_PRICE } from "./consts.js";
 import { NFTModel } from './models/NFTModel.js';
+import { STARTER_DB } from './lowdb.js';
 
 let db: Low<NFTModel[]>;
 
@@ -13,9 +15,9 @@ let db: Low<NFTModel[]>;
     const adapter = new JSONFile<NFTModel[]>(file);
     db = new Low(adapter);
     await db.read();
-    db.data ||= [];
+    db.data ||= STARTER_DB;
     db.write();
-    console.log(db);
+    //console.log(db);
  }
 
     export function getConnection(): Low<NFTModel[]> {

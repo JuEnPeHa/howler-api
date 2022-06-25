@@ -9,6 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from 'express';
 import { Functions } from '../utils/functions.js';
+import { NearInstance } from '../near.js';
+// const { networkId, nodeUrl, walletUrl, helperUrl, contractName } = getConfig(process.env.NODE_ENV || 'testnet');
+// const near = new Near({
+//     networkId,
+//     keyStore: new keyStores.InMemoryKeyStore(),
+//     nodeUrl,
+//     walletUrl,
+//     helperUrl,
+//     headers: {}
+// })
 class HowlerRoutes {
     constructor() {
         this.router = Router();
@@ -16,7 +26,7 @@ class HowlerRoutes {
     }
     getId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id /*: number*/ = yield Functions.getNFTId("JOHN", 0);
+            const id /*: number*/ = yield Functions.getNFTId("JOHN", yield NearInstance.getNearContract());
             res.send(/*id: id*/ { id });
         });
     }

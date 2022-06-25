@@ -12,6 +12,7 @@ export const WL_TOTAL_AMOUNT = 1272;
 export const OG_PRICE = 5;
 export const WL_PRICE = 7;
 export const OG_CAN_BUY = 2;
+export const MAX_BLOCKS_TO_SEPARATE = 1350;
 // const initialMap = (): Map<number, number> => {
 // const MAP_AVAILABLE_IDS: Map<number, number> = new Map<number, number>();
 // for (let index = 0; index < 1000; index++) {
@@ -28,11 +29,17 @@ export const OG_CAN_BUY = 2;
 //     [5, 5],
 // ]);
 //console.log(`${getRandomKey(MAP_AVAILABLE_IDS)}`);
-export const getRandomKey = (/*collection: NFTModel[],*/ db) => __awaiter(void 0, void 0, void 0, function* () {
-    yield db.read();
+export const getRandomKey = (/*collection: NFTModel[],*/ db) => {
+    //await db.read();
+    console.log(`getRandomKey`);
+    //console.log(db);
+    //console.log(db.read());
+    //console.log(db.data ? db.data : "No data");
+    console.log(db.data.length);
     let keys = [];
     db.data.forEach(nft => {
         let temporalId = !nft.sold ? nft.id : null;
+        //Añadir pregunta no separados
         if (temporalId) {
             keys.push(temporalId);
         }
@@ -44,7 +51,7 @@ export const getRandomKey = (/*collection: NFTModel[],*/ db) => __awaiter(void 0
     else {
         return keys[Math.floor(Math.random() * keys.length)];
     }
-});
+};
 export const makeBuy = (amount, price) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(`makeBuy: amount: ${amount}, price: ${price}, MAP_AVAILABLE_IDS: ${MAP_AVAILABLE_IDS.keys.length}`);
     //const id_number = getRandomKey();

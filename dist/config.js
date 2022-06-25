@@ -1,4 +1,3 @@
-let mainnet = false;
 const CONTRACT_NAME_TESTNET = "hc.jeph.testnet";
 const CONTRACT_NAME_MAINNET = "";
 export function getConfig(env) {
@@ -15,7 +14,7 @@ export function getConfig(env) {
         case 'development':
         case 'testnet':
             return {
-                networkId: 'default',
+                networkId: 'testnet',
                 nodeUrl: 'https://rpc.testnet.near.org',
                 contractName: CONTRACT_NAME_TESTNET,
                 walletUrl: 'https://wallet.testnet.near.org',

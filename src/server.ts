@@ -7,6 +7,8 @@ import compression from 'compression';
 import howlerRoutes from './routes/howlerRoutes.js';
 
 import {Database} from './database.js';
+import { NearInstance } from './near.js';
+
 
 
 class Server {
@@ -30,11 +32,14 @@ class Server {
 
     routes(): void {
         this.app.use(indexRoutes);
-        this.app.use('/api/ids', howlerRoutes);
+        this.app.use('/api/ids', (howlerRoutes));
     }
 
-    start(): void {
-        Database.createConnection();
+    async start(): Promise<void> {
+        NearInstance.createNearConnection();
+        await NearInstance.createNearAccount();
+        await NearInstance.createNearContract();
+        await Database.createConnection();
         this.app.listen(this.app.get('port'), () => {
             console.log('Server on port', this.app.get('port'));
         });

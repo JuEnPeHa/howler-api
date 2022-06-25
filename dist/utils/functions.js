@@ -7,26 +7,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getRandomKey } from "../consts.js";
+import { getRandomKey, MAX_BLOCKS_TO_SEPARATE } from "../consts.js";
 import { Database } from "../database.js";
-const db = Database.getConnection();
 //const keyStore: keyStores.BrowserLocalStorageKeyStore = new keyStores.BrowserLocalStorageKeyStore();
 // const { networkId, nodeUrl, walletUrl, helperUrl, contractName } = getConfig(process.env.NODE_ENV || 'testnet');
 // let nearConfig = getConfig('mainnet');
 export var Functions;
 (function (Functions) {
-    Functions.getNFTId = (account, currentBlock) => /*: Promise<number>*/ __awaiter(this, void 0, void 0, function* () {
-        const id = yield getRandomKey(db);
+    Functions.getNFTId = (account, /*currentBlock: number*/ contract) => /*: Promise<number>*/ __awaiter(this, void 0, void 0, function* () {
+        const db = Database.getConnection();
+        console.log("getNFTId");
+        console.log(contract);
+        // @ts-ignore
+        const currentBlock = yield contract.get_current_block({}).then((block) => {
+            //console.log(block);
+            return block;
+        });
+        console.log(currentBlock);
+        const id = getRandomKey(db);
         console.log(`getNFTId: id: ${id}`);
         if (id >= 0) {
-            tryToSeparate(id, account, currentBlock);
+            console.log(yield tryToSeparate(id, account, currentBlock, db));
         }
         else {
             console.log(`Error: No more ids available`);
         }
     });
-    const tryToSeparate = (id, account, currentBlock) => __awaiter(this, void 0, void 0, function* () {
-        yield db.read();
+    const tryToSeparate = (id, account, currentBlock, db) => __awaiter(this, void 0, void 0, function* () {
+        //await db.read();
+        console.log(`tryToSeparate: id: ${id} account: ${account} currentBlock: ${currentBlock} db: ${db.data[id].price}`);
         const temporal_nft = db.data.find(nft => nft.id === id);
         if (temporal_nft.sold === true) {
             return false;
@@ -34,17 +43,19 @@ export var Functions;
         else if (temporal_nft.sold === false && temporal_nft.separatedBy === "") {
             temporal_nft.separatedBy = account;
             temporal_nft.separatedAt = currentBlock;
+            temporal_nft.separated = true;
             //temporal_nft.sold = false;
-            db.write();
+            yield db.write();
             return true;
         }
         else if (temporal_nft.sold === false && temporal_nft.separatedBy !== "") {
-            //Función para revisar si el block es mayor a los separadosAt + 450
-            if (currentBlock > temporal_nft.separatedAt + 450) {
+            //Función para revisar si el block es mayor a los separadosAt + MAX_BLOCKS_TO_SEPARATE
+            if (currentBlock > temporal_nft.separatedAt + MAX_BLOCKS_TO_SEPARATE) {
                 temporal_nft.separatedBy = account;
                 temporal_nft.separatedAt = currentBlock;
+                temporal_nft.separated = true;
                 //temporal_nft.sold = false;
-                db.write();
+                yield db.write();
                 return true;
             }
             else {
@@ -52,14 +63,14 @@ export var Functions;
             }
         }
     });
-    Functions.checkIfSeparatedStillValid = (currentBlock) => __awaiter(this, void 0, void 0, function* () {
+    Functions.checkIfSeparatedStillValid = (currentBlock, db) => __awaiter(this, void 0, void 0, function* () {
         let numberOfSeparated = 0;
         let numberOfDeseparated = 0;
         yield db.read();
         yield db.data.forEach((nft) => __awaiter(this, void 0, void 0, function* () {
             if (nft.separatedBy !== "") {
                 numberOfSeparated++;
-                if (currentBlock > nft.separatedAt + 450) {
+                if (currentBlock > nft.separatedAt + MAX_BLOCKS_TO_SEPARATE) {
                     numberOfDeseparated++;
                     nft.separatedBy = "";
                     nft.separatedAt = 0;

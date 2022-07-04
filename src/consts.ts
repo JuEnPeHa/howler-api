@@ -12,6 +12,8 @@ export const OG_CAN_BUY: number = 2;
 
 export const MAX_BLOCKS_TO_SEPARATE: number = 1350;
 
+export const BLOCK_THRESHOLD: number = 1;
+
 // const initialMap = (): Map<number, number> => {
 // const MAP_AVAILABLE_IDS: Map<number, number> = new Map<number, number>();
 // for (let index = 0; index < 1000; index++) {
@@ -45,7 +47,7 @@ export const getRandomKey = (/*collection: NFTModel[],*/ db: Low<NFTModel[]>): n
         keys.push(temporalId);
     }
     });
-    console.log(`${keys}`);
+    //console.log(`${keys}`);
     if (keys.length === 0) {
         return -1;
     } else {

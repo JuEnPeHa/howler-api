@@ -1,7 +1,7 @@
 import { Low } from "lowdb";
 import { connect, Contract, keyStores, WalletConnection } from "near-api-js";
 import { getConfig } from "../config.js";
-import { makeBuy, OG_TOTAL_AMOUNT, OG_PRICE, getRandomKey, MAX_BLOCKS_TO_SEPARATE } from "../consts.js";
+import { makeBuy, OG_TOTAL_AMOUNT, OG_PRICE, getRandomKey, MAX_BLOCKS_TO_SEPARATE, BLOCK_THRESHOLD } from "../consts.js";
 import { Database } from "../database.js";
 import { NFTModel } from "../models/NFTModel.js";
 
@@ -14,7 +14,7 @@ import { NFTModel } from "../models/NFTModel.js";
 
 export module Functions {
 export const getNFTId = async (account: string, /*currentBlock: number*/ contract: Contract ): Promise<number> =>/*: Promise<number>*/ {
-const db: Low<NFTModel[]> = Database.getConnection();  
+const db_block: Low<number> = Database.getBlock();
     console.log("getNFTId");
     console.log(contract);
     // @ts-ignore
@@ -24,6 +24,13 @@ const db: Low<NFTModel[]> = Database.getConnection();
             return block;
         }
     );
+    if (currentBlock <= db_block.data! + BLOCK_THRESHOLD) {
+        console.log("getNFTId: currentBlock <= db_block.data! + BLOCK_THRESHOLD");
+        await delay(1000);
+        console.log("getNFTId: currentBlock <= db_block.data! + BLOCK_THRESHOLD: delay");
+        //return db_block.data!;
+    } 
+const db: Low<NFTModel[]> = Database.getConnection();
     console.log(currentBlock);
     const id = getRandomKey(db);
     console.log(`getNFTId: id: ${id}`);
@@ -32,6 +39,8 @@ const db: Low<NFTModel[]> = Database.getConnection();
     } else {
         console.log(`Error: No more ids available`);
     }
+    db_block.data = currentBlock;
+    await db_block.write();
     return id;
 }
 
@@ -81,4 +90,8 @@ export const checkIfSeparatedStillValid = async (currentBlock: number, db: Low<N
     console.log(`checkIfSeparatedStillValid: numberOfSeparated: ${numberOfSeparated}`);
     console.log(`checkIfSeparatedStillValid: numberOfDeseparated: ${numberOfDeseparated}`);
 }
+}
+
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
 }

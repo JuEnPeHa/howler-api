@@ -27,7 +27,9 @@ class HowlerRoutes {
     }
 
     async getId(req: Request, res: Response) {
-        const id/*: number*/ = await Functions.getNFTId("JOHN", await NearInstance.getNearContract());
+        //const id = req.params.id || nanoid();
+        const userId: string = req.query.userId as string;
+        const id/*: number*/ = await Functions.getNFTId(userId, await NearInstance.getNearContract());
         res.send( /*id: id*/ {id} );
     }
 

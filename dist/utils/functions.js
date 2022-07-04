@@ -32,6 +32,7 @@ export var Functions;
         else {
             console.log(`Error: No more ids available`);
         }
+        return id;
     });
     const tryToSeparate = (id, account, currentBlock, db) => __awaiter(this, void 0, void 0, function* () {
         //await db.read();

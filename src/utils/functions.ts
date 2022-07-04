@@ -13,7 +13,7 @@ import { NFTModel } from "../models/NFTModel.js";
 // let nearConfig = getConfig('mainnet');
 
 export module Functions {
-export const getNFTId = async (account: string, /*currentBlock: number*/ contract: Contract ) =>/*: Promise<number>*/ {
+export const getNFTId = async (account: string, /*currentBlock: number*/ contract: Contract ): Promise<number> =>/*: Promise<number>*/ {
 const db: Low<NFTModel[]> = Database.getConnection();  
     console.log("getNFTId");
     console.log(contract);
@@ -32,6 +32,7 @@ const db: Low<NFTModel[]> = Database.getConnection();
     } else {
         console.log(`Error: No more ids available`);
     }
+    return id;
 }
 
 const tryToSeparate = async (id: number, account: string, currentBlock: number, db: Low<NFTModel[]>) => {

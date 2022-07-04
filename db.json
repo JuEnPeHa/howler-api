@@ -807,9 +807,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015511",
+    "separatedBy": "JOHN"
   },
   {
     "id": 58,
@@ -1367,9 +1367,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015506",
+    "separatedBy": "JOHN"
   },
   {
     "id": 98,
@@ -1437,9 +1437,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94016177",
+    "separatedBy": "JOHN"
   },
   {
     "id": 103,
@@ -5637,9 +5637,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94016178",
+    "separatedBy": "JOHN"
   },
   {
     "id": 403,
@@ -7303,9 +7303,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015493",
+    "separatedBy": "JOHN"
   },
   {
     "id": 522,
@@ -7513,9 +7513,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015512",
+    "separatedBy": "JOHN"
   },
   {
     "id": 537,
@@ -8171,9 +8171,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015510",
+    "separatedBy": "JOHN"
   },
   {
     "id": 584,
@@ -13659,9 +13659,9 @@
     "createdAt": "2022-06-25T04:16:07.748Z",
     "updatedAt": "2022-06-25T04:16:07.748Z",
     "sold": false,
-    "separated": false,
-    "separatedAt": 0,
-    "separatedBy": ""
+    "separated": true,
+    "separatedAt": "94015504",
+    "separatedBy": "JOHN"
   },
   {
     "id": 976,

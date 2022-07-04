@@ -27,9 +27,17 @@ class HowlerRoutes {
     getId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //const id = req.params.id || nanoid();
-            const userId = req.query.userId;
-            const id /*: number*/ = yield Functions.getNFTId(userId, yield NearInstance.getNearContract());
-            res.send(/*id: id*/ { id });
+            if (req.query.userId === undefined) {
+                res.status(400).send('Missing userId');
+            }
+            else if (req.query.userId === '') {
+                res.status(400).send('Empty userId');
+            }
+            else {
+                const userId = req.query.userId;
+                const id /*: number*/ = yield Functions.getNFTId(userId, yield NearInstance.getNearContract());
+                res.send(/*id: id*/ { id });
+            }
         });
     }
     routes() {

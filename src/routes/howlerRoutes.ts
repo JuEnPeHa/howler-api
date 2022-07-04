@@ -28,9 +28,15 @@ class HowlerRoutes {
 
     async getId(req: Request, res: Response) {
         //const id = req.params.id || nanoid();
+        if (req.query.userId === undefined) {
+            res.status(400).send('Missing userId');
+        } else if (req.query.userId === '') {
+            res.status(400).send('Empty userId');
+        } else {
         const userId: string = req.query.userId as string;
         const id/*: number*/ = await Functions.getNFTId(userId, await NearInstance.getNearContract());
         res.send( /*id: id*/ {id} );
+        }
     }
 
     routes() {
